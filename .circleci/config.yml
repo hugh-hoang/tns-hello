@@ -21,7 +21,7 @@ jobs:
 
       - run: sudo npm install -g nativescript
 
-      - run: tns doctor
+      - run: yes Y | tns doctor
 
       # Download and cache dependencies
       - restore_cache:
