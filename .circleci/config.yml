@@ -28,8 +28,8 @@ jobs:
 
       - run: npm install
 
-      # Spam n on TNS statistics questions
-      - run: invalid-command n | npx tns build android --bundle --env.uglify --env.aot --env.snapshot --copy-to ~/output.apk
+      # Disable all TNS statistics spams
+      - run: npx tns usage-reporting disable && npx tns error-reporting disable && npx tns build android --bundle --env.uglify --env.aot --env.snapshot --copy-to ~/output.apk
 
       - save_cache:
           paths:
