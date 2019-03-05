@@ -26,10 +26,17 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: npm install
+      # Custom build pipeline START #
+      - run: 
+        name: Restore NPM package
+        command: npm install
 
-      # Disable all TNS statistics spams
-      - run: npx tns usage-reporting disable && npx tns error-reporting disable && npx tns build android --bundle --env.uglify --env.aot --env.snapshot --copy-to ~/output.apk
+      - run: 
+          name: TNS build APK
+          # Disable all TNS statistics spams
+          command: npx tns usage-reporting disable && npx tns error-reporting disable && npx tns build android --bundle --env.uglify --env.aot --env.snapshot --copy-to ~/output.apk
+
+      # Custom build pipeline END #
 
       - save_cache:
           paths:
