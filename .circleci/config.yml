@@ -28,8 +28,8 @@ jobs:
 
       - run: npm install
 
-      # Spam YES on TNS statistics questions
-      - run: npx tns build android --bundle --env.uglify --env.aot --env.snapshot
+      # Spam n on TNS statistics questions
+      - run: ye n | npx tns build android --bundle --env.uglify --env.aot --env.snapshot
 
       - save_cache:
           paths:
