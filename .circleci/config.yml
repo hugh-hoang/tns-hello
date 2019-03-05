@@ -7,6 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
+      # Android SDK && Node (we need both for TNS build) bundle image, more images can be found on Docker Hub https://hub.docker.com/r/circleci/android/tags
       - image: circleci/android:api-28-node
 
       # Specify service dependencies here if necessary
@@ -15,6 +16,8 @@ jobs:
       # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
+
+    parallelism: 4
 
     steps:
       - checkout
@@ -26,21 +29,29 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      # Custom build pipeline START #
+      ######################### Custom build pipeline START #####################
+      
       - run: 
           name: Restore NPM package
           command: npm install
+
+      - run:
+          name: Run Unit tests
+          # i.e npm run test:unit
+          command: echo INSERT_TEST_COMMAND_HERE
 
       - run: 
           name: TNS build APK
           # Disable all TNS statistics spams
           command: npx tns usage-reporting disable && npx tns error-reporting disable && npx tns build android --bundle --env.uglify --env.aot --env.snapshot --copy-to ~/output.apk
+      
+      # TODO Rename the file? with version number etc.?
 
-      # Custom build pipeline END #
+      # TODO Where to send the APK? AWS blob or FTP or email? https://circleci.com/docs/2.0/artifacts/
+
+      ####################### Custom build pipeline END #########################
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
