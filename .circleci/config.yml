@@ -21,7 +21,9 @@ jobs:
 
       - run: sudo npm install -g nativescript
 
-      - run: yes Y | tns doctor
+      - run: npm install
+
+      - run: tns build android --bundle
 
       # Download and cache dependencies
       - restore_cache:
