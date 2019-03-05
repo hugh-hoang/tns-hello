@@ -19,12 +19,6 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo npm install -g nativescript
-
-      - run: npm install
-
-      - run: yes YES | tns build android --bundle
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -32,7 +26,10 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: npm install
+
+      # Spam YES on TNS statistics questions
+      - run: npx tns build android --bundle --env.uglify --env.aot --env.snapshot
 
       - save_cache:
           paths:
@@ -40,4 +37,3 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: yarn test
