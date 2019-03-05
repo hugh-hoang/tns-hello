@@ -28,8 +28,8 @@ jobs:
 
       # Custom build pipeline START #
       - run: 
-        name: Restore NPM package
-        command: npm install
+          name: Restore NPM package
+          command: npm install
 
       - run: 
           name: TNS build APK
