@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/api-28-node
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -18,6 +18,10 @@ jobs:
 
     steps:
       - checkout
+
+      - run: npm install -g nativescript
+
+      - run: tns doctor
 
       # Download and cache dependencies
       - restore_cache:
